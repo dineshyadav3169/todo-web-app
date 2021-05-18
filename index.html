@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>temp-upload</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<style>
+		*{box-sizing:border-box;font-family:'Lato';}
+		:root{
+			--hieght:810;
+			--width:371;
+			--top-margin:33px;
+		}
+		button:disabled {
+			background: #ccd8eb;
+		}
+		.disable-select {
+			user-select: none; /* supported by Chrome and Opera */
+		   -webkit-user-select: none; /* Safari */
+		   -khtml-user-select: none; /* Konqueror HTML */
+		   -moz-user-select: none; /* Firefox */
+		   -ms-user-select: none; /* Internet Explorer/Edge */
+		}
+		@-webkit-keyframes fadeON {  from {opacity: 0} to {opacity: 1;display:flex}}
+		@keyframes fadeON {from {opacity: 0}to {opacity: 1;display:flex}}
+		.fadeON{-webkit-animation-name: fadeON;-webkit-animation-duration: 0.7s;animation-name: fadeON;animation-duration: 0.7s;display: flex;}
+
+		.mainHeading {font-size: 2rem;font-weight: 600;}
+		.subInfo {display: grid;text-align: center;padding-top: 10px;font-size: 18px;line-height: 1.4;color: #110f0fe3;}
+		.continueBtn {border: none;position: fixed;bottom: 40px;background: #307bf5;padding: 12px;font-size: 17px;color: #fff;border-radius: 14px;width: 46vh;left: 36px;text-align-last: center;}
+		.headingBox {display:grid;text-align: center;}
+		.errorMessage {display:none;position:absolute;padding: 25px;background: white;border: 1px solid red;border-radius: 15px;font-size: 1.2rem;font-weight: 600;width: 95%;border-top-width: medium;}
+		.successMessage {display: none;position:absolute;padding: 25px;background: white;border: 1px solid #3fc444;border-radius: 15px;font-size: 1.2rem;font-weight: 600;width: 95%;border-top-width: thick;}
+		</style>
+		<script defer src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+		<script defer src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+		<script defer src="/__/firebase/init.js"></script>
+		<script defer src="script/login/login.js"></script>
+	</head>
+	<body>
+		<main>
+			<div>
+				<div id="errorMessage" class="fadeON errorMessage">
+					<span class="material-icons" style="color: #eb5c5c;font-size: 2rem;padding-right: 4px;">priority_high</span>
+					<span id="errorText"></span>
+				</div>
+				<div id="successMessage" class="fadeON successMessage">
+					<span class="material-icons" style="color: #4caf50;font-size: 2rem;padding-right: 4px;">done</span>
+					<span id="successText"></span>
+				</div>
+			</div>
+			<center>
+			<img src="dash.jpg" id="dash" style="height:300px;width:300px;margin-top:10px">
+			
+			<div id="textBlock">
+			<div class="headingBox">
+				<span class="mainHeading">Get Tasks Done,</span>
+				<span class="mainHeading">faster than ever.</span>
+			</div>
+			<div class="subInfo">
+				<span>Manage, capture and edit your tasks</span>
+				<span>from anywhere at any time.</span>
+			</div>
+			</div>
+			
+			<button class="continueBtn disable-select" id="loginBtn" disabled>
+				<span style="position: relative;bottom: 6px;">Continue</span>
+				<span class="material-icons">chevron_right</span>
+			</button>
+			</center>
+		</main>
+
+	</body>
+</html>

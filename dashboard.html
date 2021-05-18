@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>temp-upload</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<style>
+		*{box-sizing:border-box;font-family:'Lato';}
+		:root{
+			--hieght:810;
+			--width:371;
+			--top-margin:33px;
+		}
+		.footer {
+			position: fixed;
+			bottom: 0;
+			filter: drop-shadow(0 5mm 3mm black);
+		}
+		.disable-select {
+			user-select: none; /* supported by Chrome and Opera */
+		   -webkit-user-select: none; /* Safari */
+		   -khtml-user-select: none; /* Konqueror HTML */
+		   -moz-user-select: none; /* Firefox */
+		   -ms-user-select: none; /* Internet Explorer/Edge */
+		}
+		.column{float:left;}
+		.left{width:75%}
+		.right{width:25%}
+		.header:after{content: "";display: table;clear: both;}
+		
+		.material-icons.md-48 { font-size: 48px; }
+		.main {padding-bottom: 30px;}
+		.body {background: #f7f7f7;margin:0}
+		.rotate90 {transform:rotate(90deg);}
+		.accountCircle {margin-top: var(--top-margin);}
+		.switchBox {display:none;background:#ededed;margin-top:28px;height:51px;border-radius:13px;width:225px;}
+		.switchPending {color:#2b7994;background:#fff;border-radius:13px;margin:5px;width:109.5px;text-align:center;padding-top:11px;}
+		.switchCompleted {color:#00000096;margin:5px;width:109.5px;text-align:center;padding-top:11px;}
+		
+		.mainTaskWindow {overflow: auto;padding-bottom: 300px;padding-left:34px;padding-right:31px;margin-top:44px;}
+		.taskBox {margin-top:15px;background:#fff;height:79px;display:flex;border-radius:13px;position:relative;box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 0%) !important;}
+		.checkBox {padding-top:28px;margin-left:15px;color:#0000008a;}
+		.taskInfo {padding-top:27px;margin-left:15px;font-weight: 600;}
+		.taskOption {padding-top:25px;position:absolute;right:5px;padding-right:5px;color:#0000008a;}
+		.subTaskInfo {margin-left: 15px;color: #4e4d4d;position: absolute;top: 44px;font-family: sans-serif;font-size: 13px;}
+		
+		.taskDoneLine{text-decoration: line-through;}
+		
+		@-webkit-keyframes taskFadeOut{0%{left:1px;}50%{left:30px;}100%{left:350px;display:none;}}
+		@keyframes taskFadeOut{0%{left:1px;}50%{left:30px;}100%{left:350px;display:none;}}
+		.taskFadeOut{-webkit-animation-name: taskFadeOut;animation-name: taskFadeOut;-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-full-mode: both;animation-full-mode:both;}
+		
+		@-webkit-keyframes inputFadeIn{0%{bottom:-39px;}50%{bottom:30px;}100%{bottom:350px;display:none;}}
+		@keyframes inputFadeIn{0%{bottom:1px;}50%{bottom:30px;}100%{bottom:350px;display:none;}}
+		.inputFadeIn{-webkit-animation-name: inputFadeIn;animation-name: inputFadeIn;-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-full-mode: both;animation-full-mode:both;}
+		
+		@-webkit-keyframes taskFadeIn{0%{left: -1px;}50%{left: -30px;}100%{left: -350px;display:none;}}
+		@keyframes taskFadeIn{0%{left: -1px;}50%{left: -30px;}100%{left: -350px;display:none;}}
+		.taskFadeIn{-webkit-animation-name: taskFadeIn;animation-name: taskFadeIn;-webkit-animation-duration:1.5s;animation-duration:1.5s;-webkit-animation-full-mode: both;animation-full-mode:both;}
+		
+		.datepicker-toggle {display: inline-block;position: relative;width: 18px;height: 19px;}
+		.datepicker-toggle-button {position: absolute;left: 0;top: 0;width: 100%;height: 100%;color: #526167;}
+		.datepicker-input {position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0;cursor: pointer;box-sizing: border-box;}
+		.datepicker-input::-webkit-calendar-picker-indicator {position: absolute;left: 0;top: 0;width: 100%;height: 100%;margin: 0;padding: 0;cursor: pointer;}
+
+		@-webkit-keyframes ButtomUp {  from {bottom: -300px; opacity: 0} to {bottom: 0; opacity: 1}}
+		@keyframes ButtomUp {from {bottom: -300px; opacity: 0}to {bottom: 0; opacity: 1;display:block}}
+		.ButtomUp{-webkit-animation-name: ButtomUp;-webkit-animation-duration: 0.4s;animation-name: ButtomUp;animation-duration: 0.4s;display: none; position: fixed; bottom: 0px; width: -webkit-fill-available; height: 100%;}
+
+		@-webkit-keyframes fadeON {  from {opacity: 0} to {opacity: 1;display:block}}
+		@keyframes fadeON {from {opacity: 0}to {opacity: 1;display:block}}
+		.fadeON{-webkit-animation-name: ButtomUp;-webkit-animation-duration: 0.4s;animation-name: ButtomUp;animation-duration: 0.4s;display: none;}
+
+		.datePadding {padding-top: 23px;}
+		#inputSupBox {display: grid;position: fixed;bottom: 0px;padding-top: 3rem;padding-bottom: 4rem;border-radius: 21px;background: rgb(255, 255, 255);width: -webkit-fill-available;box-shadow: rgb(0 0 0 / 10%) 0px 10px 16px 0px, rgb(0 0 0 / 18%) 0px 6px 20px 0px !important;}
+		#tasksText {font-size: 1.5rem;border-radius: 12px;border: 1px solid;outline: none;height: 2.5rem;box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 18%) !important;font-family: system-ui;}
+		#tasksText input:focus {border: 10px solid black}
+		#dateForTask {position: relative;top: 28px;left: 37px;padding: 7px;border-radius: 6px;height: 32px;width: 77px;background: #cecece;color: #000000b0;}
+		#addTaskBtn {height: 40px;font-weight: 600;position: relative;top: 20px;left: 180px;color: #fff;background: black;}
+		.userBoxBtn {transition: 1s;position: fixed;top: 78px;right: 13px;background: #000000e6;padding: 12px 12px 22px 12px;border-radius: 11px;color: #fff;font-weight: 600;box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 18%) !important;}
+		</style>
+		<script defer src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+		<script defer src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+		<script defer src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+		<script defer src="/__/firebase/init.js"></script>
+		<script defer type="text/javascript" src="script/dash/auth/handler.js"></script>
+		<script defer type="text/javascript" src="script/dash/dash.js"></script>
+		<script defer type="text/javascript" src="script/dash/function.js"></script>
+	</head>
+	<body class="body">
+		<main class="main">
+		<div style="margin-left:31px;margin-right:31px;">
+			<div class="header">
+				<div style="margin-top:var(--top-margin)" class="column left">
+					<h1 id="projectHeadings" style="margin:0;height:32px;margin-bottom: 8px;">My Task</h1>
+					<span style="height:14px;color: #000000bf;" id="currentDate">Day, Date Month</span>
+				</div>
+				<div class="column right accountCircle">
+					<div>
+						<span id="userPhotoMaterial" class="material-icons" style="float: right;height: 40px;width: 40px;">account_circle</span>
+						<img id="userPhoto" style="display:none;float: right;height: 40px;width: 40px;border-radius: 69px;" >
+					</div>
+					<div class="fadeON">
+						<div class="userBoxBtn disable-select">
+							<span id="logOut" style="float: right;height: 12px;font-family: system-ui;">Log out</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="switchBox">
+				<div id="pending" class="switchPending disable-select">
+					<span>Pending</span>
+				</div>
+				<div id="completed" class="switchCompleted disable-select">
+					<span>Completed</span>
+				</div>
+			</div>
+		</div>
+		
+		<div id="projectView" class="mainTaskWindow">
+		</div>
+
+		<div id="pendingBox" class="mainTaskWindow">
+		</div>
+		
+		<div style="display:none" id="completedBox" class="mainTaskWindow">	
+		</div>
+
+
+	
+		
+		<span id="noTaskFound" style="display: none;position: absolute;font-size: 1.1rem;z-index: 1;color: #747171;">No Task Found</span>
+		</main>
+	
+		
+		<div id="addInput">
+			<img id="svgLoader" src="svg/tail-spin.svg" style="height: 150px;width: 100px;position: fixed;bottom: 6px;left: 130.5px;">
+			<svg id="adjustPosition" style="position: fixed;bottom: 44px;left: 144px;filter: drop-shadow(0 0mm 18mm black);height: 58px;width: 73px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" xmlns:v="https://vecta.io/nano"><defs><path d="M100 50c0 27.6-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0s50 22.4 50 50z" id="A"/><path d="M45.69 23.21h7.14v22.12h-7.14V23.21z" id="B"/><path d="M45.69 52.86h7.14v22.13h-7.14V52.86z" id="C"/><path d="M74.76 45.33v7.21H53.17v-7.21h21.59z" id="D"/><path d="M45.33 45.33v7.21H23.74v-7.21h21.59z" id="E"/><path d="M51.05 50.9l1.78 1.96h-3.57-3.57l1.78-1.96 1.79-1.96 1.79 1.96z" id="F"/><path d="M47.47 46.97l-1.78-1.96h3.57 3.57l-1.78 1.96-1.79 1.97-1.79-1.97z" id="G"/><path d="M47.3 50.74l-1.97 1.8v-3.6-3.61l1.97 1.81 1.96 1.8-1.96 1.8z" id="H"/><path d="M51.22 47.14l1.96-1.81v3.61 3.6l-1.96-1.8-1.96-1.8 1.96-1.8z" id="I"/></defs><use xlink:href="#A" fill="#fff"/><use xlink:href="#B" fill="#e31818"/><use xlink:href="#C" fill="#1c9920"/><use xlink:href="#D" fill="#03a9f4"/><use xlink:href="#E" fill="#d8c200"/><use xlink:href="#F" fill="#1c9920"/><use xlink:href="#G" fill="#e31818"/><use xlink:href="#H" fill="#d8c200"/><use xlink:href="#I" fill="#03a9f4"/></svg>
+		</div>
+		
+		
+		<div>
+			<svg class="footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 4">
+			  <path d="M 0 0 L 3 0 C 7.3333 0 8 0 10 1 L 10 1 C 12 2 13 2 15 1 C 17 0 17.6667 0 22 0 L 25 0 L 25 5 L 0 5 L 0 0" fill="#fff"/>
+			</svg>
+			<div class="header">
+				<div class="column left">
+					<span class="material-icons disable-select" style="position: fixed;bottom: 26px;left: 36px;">sort</span>
+				</div>
+				
+				<div class="column right">
+					<span class="material-icons disable-select" style="position: fixed;bottom: 26px;right: 36px;">more_horiz</span>
+				</div>
+			</div>
+		</div>
+		
+		<div id="inputBox" class="ButtomUp">
+			<div id="inputSupBox" class="mainTaskWindow ">
+				<input type="text" id="tasksText" autocomplete="off">
+				<span id="dateForTask"style="visibility: hidden;">May 13</span>
+				<span class="datepicker-toggle" style="top: 0px;left: 7px;">
+				  <span class="datepicker-toggle-button"><i class="material-icons disable-select">today</i></span>
+				  <input type="date" class="datepicker-input">
+				</span>
+				<span class="switchPending disable-select" id="addTaskBtn">Apply</span>
+			</div>
+		</div>
+	
+	</body>
+</html>
