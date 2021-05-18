@@ -146,8 +146,14 @@ function taskUpdate(Id,selectedProject,taskCount){
 	var element = document.getElementById(Id);
 	element.firstElementChild.nextElementSibling.firstElementChild.innerText = tasksText.value;
 	if(elementDb.deadline!=''){
-		element.firstElementChild.nextElementSibling.firstElementChild.classList.add('datePadding');
-		element.firstElementChild.nextElementSibling.lastElementChild.innerText = dateForTask.innerText;
+		if(element.firstElementChild.nextElementSibling.childElementCount==1){
+			element.firstElementChild.nextElementSibling.firstElementChild.classList.add('datePadding');
+			const span = document.createElement('span');
+			span.setAttribute('class','subTaskInfo');
+			span.innerText = dateForTask.innerText;
+		}else{
+			element.firstElementChild.nextElementSibling.lastElementChild.innerText = dateForTask.innerText;
+		}
 	}
 }
 

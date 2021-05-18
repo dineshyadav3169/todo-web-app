@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			<center>
-			<img src="dash.jpg" id="dash" style="height:300px;width:300px;margin-top:10px">
+			<img src="image/dash.jpg" id="dash" style="height:300px;width:300px;margin-top:10px">
 			
 			<div id="textBlock">
 			<div class="headingBox">
@@ -72,6 +72,11 @@
 			</button>
 			</center>
 		</main>
-
+	
+	<script>
+		if(screen.width<640){
+			if('serviceWorker' in navigator){navigator.serviceWorker.register('serviceWorker.js').then(function(reg){}).catch(function(err){});}
+		}
+	</script>
 	</body>
 </html>

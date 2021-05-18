@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
         <title>temp-upload</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -68,7 +69,7 @@
 
 		@-webkit-keyframes ButtomUp {  from {bottom: -300px; opacity: 0} to {bottom: 0; opacity: 1}}
 		@keyframes ButtomUp {from {bottom: -300px; opacity: 0}to {bottom: 0; opacity: 1;display:block}}
-		.ButtomUp{-webkit-animation-name: ButtomUp;-webkit-animation-duration: 0.4s;animation-name: ButtomUp;animation-duration: 0.4s;display: none; position: fixed; bottom: 0px; width: -webkit-fill-available; height: 100%;}
+		.ButtomUp{-webkit-animation-name: ButtomUp;-webkit-animation-duration: 0.4s;animation-name: ButtomUp;animation-duration: 0.4s;display: none; position: fixed; bottom: 0px; width: -webkit-fill-available; height: 100%;backdrop-filter: invert(1) blur(1px);}
 
 		@-webkit-keyframes fadeON {  from {opacity: 0} to {opacity: 1;display:block}}
 		@keyframes fadeON {from {opacity: 0}to {opacity: 1;display:block}}
@@ -148,7 +149,7 @@
 			</svg>
 			<div class="header">
 				<div class="column left">
-					<span class="material-icons disable-select" style="position: fixed;bottom: 26px;left: 36px;">sort</span>
+					<span class="material-icons disable-select" style="position: fixed;bottom: 26px;left: 36px;" id="homeBtn">home</span>
 				</div>
 				
 				<div class="column right">

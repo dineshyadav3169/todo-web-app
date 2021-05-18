@@ -15,6 +15,7 @@ _('#addInput').addEventListener('click',function(){
 	inputBox.classList.add('ButtomUp');
 	inputBox.style.display = "block";
 	tasksText.select();
+	NoTaskFound(false);
 })
 
 
@@ -321,6 +322,9 @@ function openProject(element){
 
 
 
+////////////////////////////////////////////////////////////////
+// Display No task Found function
+///////////////////////////////////////////////////////////////
 function NoTaskFound(event){
 	const element = _('#noTaskFound');
 	if(event==true){
@@ -329,3 +333,15 @@ function NoTaskFound(event){
 		element.style.display = 'none';
 	}
 }
+
+
+
+
+////////////////////////////////////////////////////////////////
+// event listner for home icon click
+///////////////////////////////////////////////////////////////
+_('#homeBtn').addEventListener('click',function(){
+	_('#projectView').style.display = "block";
+	_('#pendingBox').style.display = 'none';
+	_('#completedBox').style.display = 'none';
+})
