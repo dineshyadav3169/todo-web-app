@@ -2,6 +2,7 @@ function _(qurey){
 	return document.querySelector(qurey)
 }
 
+
 function toggleSignIn() {
   if (!firebase.auth().currentUser) {
 	var provider = new firebase.auth.GithubAuthProvider();
