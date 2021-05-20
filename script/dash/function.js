@@ -45,7 +45,7 @@ function setProjectTask(projectName,dateForTask,projectCount){
 	db.collection(ldb.uid).doc('project').update(postJosn);
 
 	//update local DataBase
-	ldb.projects[timeStamp] = [{deadline:dateForTask,task:projectName,completed:"false",id:timeStamp,sequence:projectCount}]
+	ldb.projects[timeStamp] = [{deadline:dateForTask,projectName:projectName,completed:"false",id:timeStamp,sequence:projectCount}]
 	ldb.projectCount = projectCount+1;
 	if(ldb.projectCount!=0){
 		NoTaskFound(false);
@@ -151,6 +151,7 @@ function taskUpdate(Id,selectedProject,taskCount){
 			const span = document.createElement('span');
 			span.setAttribute('class','subTaskInfo');
 			span.innerText = dateForTask.innerText;
+			element.firstElementChild.nextElementSibling.append(span);
 		}else{
 			element.firstElementChild.nextElementSibling.lastElementChild.innerText = dateForTask.innerText;
 		}

@@ -342,6 +342,11 @@ function NoTaskFound(event){
 ///////////////////////////////////////////////////////////////
 _('#homeBtn').addEventListener('click',function(){
 	_('#projectView').style.display = "block";
-	_('#pendingBox').style.display = 'none';
-	_('#completedBox').style.display = 'none';
+	_('#currentDate').innerText = currentDay();
+	_('#projectHeadings').innerText = 'My Task';
+        	_('#pendingBox').innerHTML = '';
+	_('#completedBox').innerHTML = '';
+	_('.switchBox').style.display = 'none';
+	ldb.screen = 0;
+	NoTaskFound(false);
 })
