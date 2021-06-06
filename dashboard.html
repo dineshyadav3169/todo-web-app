@@ -12,10 +12,23 @@
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 		<style>
 		*{box-sizing:border-box;font-family:'Lato';}
+		@media screen and (min-width: 280px) and (max-width: 700px) and (orientation: landscape) {
+		  html {
+		    transform: rotate(-90deg);
+		    transform-origin: left top;
+		    width: 100vh;
+		    overflow-x: hidden;
+		    position: absolute;
+		    top: 100%;
+		    left: 0;
+		  }
+		}
 		:root{
 			--hieght:810;
 			--width:371;
 			--top-margin:33px;
+			--outset: 0;
+			--bgcolor: #f7f7f7;
 		}
 		.footer {
 			position: fixed;
@@ -36,7 +49,7 @@
 		
 		.material-icons.md-48 { font-size: 48px; }
 		.main {padding-bottom: 30px;}
-		.body {background: #f7f7f7;margin:0}
+		.body {background: var(--bgcolor);margin:0}
 		.rotate90 {transform:rotate(90deg);}
 		.accountCircle {margin-top: var(--top-margin);}
 		.switchBox {display:none;background:#ededed;margin-top:28px;height:51px;border-radius:13px;width:225px;}
@@ -44,7 +57,7 @@
 		.switchCompleted {color:#00000096;margin:5px;width:109.5px;text-align:center;padding-top:11px;}
 		
 		.mainTaskWindow {overflow: auto;padding-bottom: 300px;padding-left:34px;padding-right:31px;margin-top:44px;}
-		.taskBox {margin-top:15px;background:#fff;height:79px;display:flex;border-radius:13px;position:relative;box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 0%) !important;}
+		.taskBox {margin-top:15px;background:#fff;height:79px;display:flex;border-radius:13px;position:relative;box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 0%) !important;border-bottom: var(--outset); }
 		.checkBox {padding-top:28px;margin-left:15px;color:#0000008a;}
 		.taskInfo {padding-top:27px;margin-left:15px;font-weight: 600;}
 		.taskOption {padding-top:25px;position:absolute;right:5px;padding-right:5px;color:#0000008a;}
@@ -71,7 +84,7 @@
 
 		@-webkit-keyframes ButtomUp {  from {bottom: -300px; opacity: 0} to {bottom: 0; opacity: 1}}
 		@keyframes ButtomUp {from {bottom: -300px; opacity: 0}to {bottom: 0; opacity: 1;display:block}}
-		.ButtomUp{-webkit-animation-name: ButtomUp;-webkit-animation-duration: 0.4s;animation-name: ButtomUp;animation-duration: 0.4s;display: none; position: fixed; bottom: 0px; width: -webkit-fill-available; height: 100%;backdrop-filter: invert(1) blur(1px);}
+		.ButtomUp{-webkit-animation-name: ButtomUp;-webkit-animation-duration: 0.4s;animation-name: ButtomUp;animation-duration: 0.4s;display: none; position: fixed; bottom: 0px; width: -webkit-fill-available; height: 100%;}
 
 		@-webkit-keyframes fadeON {  from {opacity: 0} to {opacity: 1;display:block}}
 		@keyframes fadeON {from {opacity: 0}to {opacity: 1;display:block}}
@@ -83,7 +96,11 @@
 		#tasksText input:focus {border: 10px solid black}
 		#dateForTask {position: relative;top: 28px;left: 37px;padding: 7px;border-radius: 6px;height: 32px;width: 77px;background: #cecece;color: #000000b0;}
 		#addTaskBtn {height: 40px;font-weight: 600;position: relative;top: 20px;left: 180px;color: #fff;background: black;}
-		.userBoxBtn {transition: 1s;position: fixed;top: 78px;right: 13px;background: #000000e6;padding: 12px 12px 22px 12px;border-radius: 11px;color: #fff;font-weight: 600;box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 18%) !important;}
+		.userBoxBtn {transition: 1s;position: fixed;top: 78px;right: 13px;background: #fff;padding: 12px 12px 22px 12px;border-radius: 11px;color: #000;font-weight: 600;box-shadow: 0 10px 16px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 18%) !important;}
+		#homeBtn:hover {
+		    filter: drop-shadow(2px 4px 8px black);
+		}
+		.drakModeLine{border-bottom: groove;}
 		</style>
 		<script defer src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
 		<script defer src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
@@ -94,7 +111,7 @@
 		<script defer type="text/javascript" src="script/dash/function.js"></script>
 	</head>
 	<body class="body">
-		<main class="main">
+		<main class="main ButtomUp">
 		<div style="margin-left:31px;margin-right:31px;">
 			<div class="header">
 				<div style="margin-top:var(--top-margin)" class="column left">
@@ -104,11 +121,12 @@
 				<div class="column right accountCircle">
 					<div>
 						<span id="userPhotoMaterial" class="material-icons" style="float: right;height: 40px;width: 40px;">account_circle</span>
-						<img id="userPhoto" style="display:none;float: right;height: 40px;width: 40px;border-radius: 69px;" >
+						<img id="userPhoto" style="display:none;float: right;height: 40px;width: 40px;border-radius: 69px;filter:invert(0) hue-rotate(0deg);" >
 					</div>
 					<div class="fadeON">
-						<div class="userBoxBtn disable-select">
-							<span id="logOut" style="float: right;height: 12px;font-family: system-ui;">Log out</span>
+						<div class="userBoxBtn disable-select" style="display: grid;">
+							<span id="darkMode" style="float: right;height: 12px;font-family: system-ui;">Dark Mode</span>
+							<span id="logOut" style="padding-top: 15px;float: right;height: 22px;font-family: system-ui;">Log out</span>
 						</div>
 					</div>
 				</div>
@@ -140,8 +158,21 @@
 	
 		
 		<div id="addInput">
-			<img id="svgLoader" src="svg/tail-spin.svg" style="height: 150px;width: 100px;position: fixed;bottom: 6px;left: 130.5px;">
-			<svg id="adjustPosition" style="position: fixed;bottom: 44px;left: 144px;filter: drop-shadow(0 0mm 18mm black);height: 58px;width: 73px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" xmlns:v="https://vecta.io/nano"><defs><path d="M100 50c0 27.6-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0s50 22.4 50 50z" id="A"/><path d="M45.69 23.21h7.14v22.12h-7.14V23.21z" id="B"/><path d="M45.69 52.86h7.14v22.13h-7.14V52.86z" id="C"/><path d="M74.76 45.33v7.21H53.17v-7.21h21.59z" id="D"/><path d="M45.33 45.33v7.21H23.74v-7.21h21.59z" id="E"/><path d="M51.05 50.9l1.78 1.96h-3.57-3.57l1.78-1.96 1.79-1.96 1.79 1.96z" id="F"/><path d="M47.47 46.97l-1.78-1.96h3.57 3.57l-1.78 1.96-1.79 1.97-1.79-1.97z" id="G"/><path d="M47.3 50.74l-1.97 1.8v-3.6-3.61l1.97 1.81 1.96 1.8-1.96 1.8z" id="H"/><path d="M51.22 47.14l1.96-1.81v3.61 3.6l-1.96-1.8-1.96-1.8 1.96-1.8z" id="I"/></defs><use xlink:href="#A" fill="#fff"/><use xlink:href="#B" fill="#e31818"/><use xlink:href="#C" fill="#1c9920"/><use xlink:href="#D" fill="#03a9f4"/><use xlink:href="#E" fill="#d8c200"/><use xlink:href="#F" fill="#1c9920"/><use xlink:href="#G" fill="#e31818"/><use xlink:href="#H" fill="#d8c200"/><use xlink:href="#I" fill="#03a9f4"/></svg>
+			<img id="svgLoader" src="svg/tail-spin.svg" style="display: none;height: 150px;width: 100px;position: fixed;bottom: 6px;left: 130.5px;">
+			<svg id="adjustPosition" style="position: fixed;bottom: 44px;left: 144px;filter: drop-shadow(0 0mm 18mm black);height: 58px;width: 73px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" xmlns:v="https://vecta.io/nano">
+				<defs>
+					<path d="M100 50c0 27.6-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0s50 22.4 50 50z" id="A"/>
+					<path d="M45.69 23.21h7.14v22.12h-7.14V23.21z" id="B"/>
+					<path d="M45.69 52.86h7.14v22.13h-7.14V52.86z" id="C"/>
+					<path d="M74.76 45.33v7.21H53.17v-7.21h21.59z" id="D"/>
+					<path d="M45.33 45.33v7.21H23.74v-7.21h21.59z" id="E"/>
+					<path d="M51.05 50.9l1.78 1.96h-3.57-3.57l1.78-1.96 1.79-1.96 1.79 1.96z" id="F"/>
+					<path d="M47.47 46.97l-1.78-1.96h3.57 3.57l-1.78 1.96-1.79 1.97-1.79-1.97z" id="G"/>
+					<path d="M47.3 50.74l-1.97 1.8v-3.6-3.61l1.97 1.81 1.96 1.8-1.96 1.8z" id="H"/>
+					<path d="M51.22 47.14l1.96-1.81v3.61 3.6l-1.96-1.8-1.96-1.8 1.96-1.8z" id="I"/>
+				</defs>
+				<use xlink:href="#A" fill="#fff"/><use xlink:href="#B" fill="#e31818"/><use xlink:href="#C" fill="#1c9920"/><use xlink:href="#D" fill="#03a9f4"/><use xlink:href="#E" fill="#d8c200"/><use xlink:href="#F" fill="#1c9920"/><use xlink:href="#G" fill="#e31818"/><use xlink:href="#H" fill="#d8c200"/><use xlink:href="#I" fill="#03a9f4"/>
+			</svg>
 		</div>
 		
 		
@@ -159,8 +190,7 @@
 				</div>
 			</div>
 		</div>
-		
-		<div id="inputBox" class="ButtomUp">
+		<div id="inputBox" class="ButtomUp" style="backdrop-filter:blur(1px);">
 			<div id="inputSupBox" class="mainTaskWindow ">
 				<input type="text" id="tasksText" autocomplete="off">
 				<span id="dateForTask"style="visibility: hidden;">May 13</span>
@@ -171,6 +201,20 @@
 				<span class="switchPending disable-select" id="addTaskBtn">Apply</span>
 			</div>
 		</div>
-	
+		<div id="overlayDark" style="position: fixed;bottom: 0px;height: 100%;width: -webkit-fill-available;display: none;backdrop-filter: invert(1) hue-rotate(180deg);pointer-events: none;" class="ButtomUp"></div>
+		<script>
+			const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+			let root = document.documentElement;
+
+			if(currentTheme){
+				if(currentTheme=='dark'){
+					document.getElementById('darkMode').innerText = 'Light Mode';
+					document.getElementById('userPhoto').style.filter = 'invert(1) hue-rotate(180deg)';
+					document.getElementById('overlayDark').style.display = 'block';
+					root.style.setProperty('--outset', "outset");
+					root.style.setProperty('--bgcolor', "#e3e3e3");
+				}
+			}
+		</script>
 	</body>
 </html>

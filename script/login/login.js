@@ -49,7 +49,25 @@ function initApp() {
 
 window.addEventListener('load',function(){
 	if(window.innerWidth>415){
-		document.write('This Website Only Available for "Mobile"')
+		var h3 = document.createElement('h3');
+		var p = document.createElement('p');
+		p.innerText = 'Please visit on a mobile to create your task!';
+		var div1 = document.createElement('div');
+		var div2 = document.createElement('div');
+		var div3 = document.createElement('div');
+		div1.className = "max-w-full mt-2 text-sm text-center text-gray-500";
+		div2.className = 'px-4 py-5 sm:p-6';
+		h3.innerText = 'This site is optimized for mobile';
+		h3.className = 'max-w-full text-lg font-medium leading-6 text-center text-gray-900';
+		div3.className = 'bg-white shadow rounded-lg mt-2.5';
+		div1.append(p)
+		div2.append(h3)
+		div2.append(div1)
+		div3.append(div2)
+
+		document.body.innerHTML = "";
+		document.body.style.backgroundColor = 'rgba(250,250,250,1)';
+		document.body.append(div3);
 	}
 	var clientWidth = document.documentElement.clientWidth;
 	var clientHeight = document.documentElement.clientHeight;

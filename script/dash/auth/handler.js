@@ -57,8 +57,12 @@ function initApp() {
 				
 				if(ldb.projectCount!=0){
 					loadProjectFromFire();
+					document.getElementsByTagName('main')[0].style.display = 'block';
+					setTimeout(function(){document.getElementsByTagName('main')[0].classList.remove('ButtomUp')},400)
 				}else{
 					NoTaskFound(true);
+					document.getElementsByTagName('main')[0].style.display = 'block';
+					setTimeout(function(){document.getElementsByTagName('main')[0].classList.remove('ButtomUp')},400)
 				}
 
 			}
@@ -72,6 +76,7 @@ function initApp() {
 			userPhoto.addEventListener('load',function(){
 				_('#userPhotoMaterial').style.display = 'none';
 				userPhoto.style.display = 'block';
+				userPhoto.click();
 			})
 		}
 	} else {
@@ -93,18 +98,22 @@ _('#logOut').addEventListener('click',function(){
 })
 
 
+
 window.addEventListener('load', function(){
 	var clientWidth = document.documentElement.clientWidth;
 	var clientHeight = document.documentElement.clientHeight;
 	var leftShift = clientWidth/2 - 36.5;
 	var leftShiftLoader = clientWidth/2 - 50;
-	var noTaskFound = _('#noTaskFound');
-	var svgLoader = _('#svgLoader');
-	noTaskFound.style.top = (clientHeight/2) + 'px';
-	noTaskFound.style.left = (clientWidth - 112)/2 + 'px';
-	_('#adjustPosition').style.left = leftShift + 'px';
-	svgLoader.style.left = leftShiftLoader + 'px';
-	svgLoader.style.bottom = (clientHeight/2) + 'px';
+	var noTaskFound = _('#noTaskFound').style;
+	var svgLoader = _('#svgLoader').style;
+	var adjustPosition = _('#adjustPosition').style;
+	noTaskFound.top = (clientHeight/2) + 'px';
+	noTaskFound.left = (clientWidth - 112)/2 + 'px';
+	adjustPosition.left = leftShift + 'px';
+	adjustPosition.display = 'block';
+	svgLoader.left = leftShiftLoader + 'px';
+	svgLoader.bottom = (clientHeight/2) + 'px';
+	svgLoader.display = 'block'
 	_('#currentDate').innerText = currentDay();
 	initApp();
 })

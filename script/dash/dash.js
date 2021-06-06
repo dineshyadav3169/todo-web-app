@@ -350,3 +350,30 @@ _('#homeBtn').addEventListener('click',function(){
 	ldb.screen = 0;
 	NoTaskFound(false);
 })
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////
+// Dark Mode
+///////////////////////////////////////////////////////////////
+_('#darkMode').addEventListener('click',function(){
+	const currentTheme = _('#darkMode').innerText.split(' ')[0].toLowerCase();
+	_('#darkMode').innerText = currentTheme=='dark'? 'Light Mode' : 'Dark Mode';
+	_('#userPhoto').style.filter = _('#userPhoto').style.filter=='invert(0) hue-rotate(0deg)'? 'invert(1) hue-rotate(180deg)': 'invert(0) hue-rotate(0deg)';
+	_('#overlayDark').style.display = _('#overlayDark').style.display=='none'? 'block':'none';
+	let root = document.documentElement;
+
+	if(currentTheme=='dark'){
+		root.style.setProperty('--outset', "outset");
+		root.style.setProperty('--bgcolor', "#e3e3e3");
+	}else{
+		root.style.setProperty('--outset', "0");
+		root.style.setProperty('--bgcolor', "#f7f7f7");
+	}
+
+	localStorage.setItem("theme",currentTheme);
+})
