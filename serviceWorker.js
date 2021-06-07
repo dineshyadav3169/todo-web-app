@@ -22,7 +22,6 @@ self.addEventListener('install', event => {
   );
 });
 self.addEventListener('fetch', event => {
-  console.log(event);
   if (event.request.method !== 'GET') { return; }
   if (networkFirstFiles.indexOf(event.request.url) !== -1) {
     event.respondWith(networkElseCache(event));

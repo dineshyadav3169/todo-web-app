@@ -377,3 +377,50 @@ _('#darkMode').addEventListener('click',function(){
 
 	localStorage.setItem("theme",currentTheme);
 })
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////
+// 	Sortable calling on user interaction and then destroying
+///////////////////////////////////////////////////////////////
+function sortableCall(){
+    sortable('.js-sortable', {
+        forcePlaceholderSize: true,
+        placeholderClass: 'mb1 bg-navy border border-yellow',
+        hoverClass: 'bg-maroon yellow',
+        itemSerializer: function (item, container) {
+          item.parent = '[parentNode]'
+          item.node = '[Node]'
+          item.html = item.html.replace('<','&lt;')
+          return item
+        },
+        containerSerializer: function (container) {
+          container.node = '[Node]'
+          return container
+        }
+      })
+    sortable('.js-sortable-copy-target', {
+		forcePlaceholderSize: true,
+			acceptFrom: '.js-sortable,.js-sortable-copy-target',
+		placeholderClass: 'mb1 border border-maroon',
+	  });
+    document.removeEventListener("click", sortableCall)
+}
+document.addEventListener("click", sortableCall)
+document.querySelector('.js-sortable').addEventListener('sortstart', function(e){
+	document.getElementsByClassName('js-sortable-copy-target')[0].style.color = "red";
+	document.getElementsByClassName('js-sortable-copy-target')[0].firstElementChild.innerText = "delete";
+
+});
+
+document.querySelector('.js-sortable').addEventListener('sortstop', function(e){
+	document.getElementsByClassName('js-sortable-copy-target')[0].style.color = "black";
+	document.getElementsByClassName('js-sortable-copy-target')[0].firstElementChild.innerText = "more_horiz";
+});

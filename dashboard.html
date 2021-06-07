@@ -12,17 +12,6 @@
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 		<style>
 		*{box-sizing:border-box;font-family:'Lato';}
-		@media screen and (min-width: 280px) and (max-width: 700px) and (orientation: landscape) {
-		  html {
-		    transform: rotate(-90deg);
-		    transform-origin: left top;
-		    width: 100vh;
-		    overflow-x: hidden;
-		    position: absolute;
-		    top: 100%;
-		    left: 0;
-		  }
-		}
 		:root{
 			--hieght:810;
 			--width:371;
@@ -109,6 +98,8 @@
 		<script defer type="text/javascript" src="script/dash/auth/handler.js"></script>
 		<script defer type="text/javascript" src="script/dash/dash.js"></script>
 		<script defer type="text/javascript" src="script/dash/function.js"></script>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+		<script src="script/html5sortable.js"></script>
 	</head>
 	<body class="body">
 		<main class="main ButtomUp">
@@ -141,8 +132,8 @@
 			</div>
 		</div>
 		
-		<div id="projectView" class="mainTaskWindow">
-		</div>
+		<ul id="projectView" class="mainTaskWindow js-sortable sortable">
+		</ul>
 
 		<div id="pendingBox" class="mainTaskWindow">
 		</div>
@@ -152,14 +143,13 @@
 
 
 	
-		
 		<span id="noTaskFound" style="display: none;position: absolute;font-size: 1.1rem;z-index: 1;color: #747171;">No Task Found</span>
 		</main>
 	
 		
 		<div id="addInput">
 			<img id="svgLoader" src="svg/tail-spin.svg" style="display: none;height: 150px;width: 100px;position: fixed;bottom: 6px;left: 130.5px;">
-			<svg id="adjustPosition" style="position: fixed;bottom: 44px;left: 144px;filter: drop-shadow(0 0mm 18mm black);height: 58px;width: 73px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" xmlns:v="https://vecta.io/nano">
+			<svg id="adjustPosition" style="display: none;position: fixed;bottom: 44px;left: 144px;filter: drop-shadow(0 0mm 18mm black);height: 58px;width: 73px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" xmlns:v="https://vecta.io/nano">
 				<defs>
 					<path d="M100 50c0 27.6-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0s50 22.4 50 50z" id="A"/>
 					<path d="M45.69 23.21h7.14v22.12h-7.14V23.21z" id="B"/>
@@ -185,7 +175,7 @@
 					<span class="material-icons disable-select" style="position: fixed;bottom: 26px;left: 36px;" id="homeBtn">home</span>
 				</div>
 				
-				<div class="column right">
+				<div class="column right js-sortable-copy-target sortable">
 					<span class="material-icons disable-select" style="position: fixed;bottom: 26px;right: 36px;">more_horiz</span>
 				</div>
 			</div>
