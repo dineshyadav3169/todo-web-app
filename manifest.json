@@ -14,7 +14,7 @@
         "type": "image/png"
       }
     ],
-    "start_url": "https://todo-lineup.web.app/dashboard",
+    "start_url": "localhost:8080/dashboard",
     "background_color": "#f7f7f7",
     "theme_color": "#f7f7f7",
     "display": "standalone"

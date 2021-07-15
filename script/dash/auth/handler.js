@@ -120,7 +120,7 @@ window.addEventListener('load', function(){
 
 window.onpopstate=function()
 {
-   if(window.location.hash=="" && window.location.href=="https://todo-lineup.web.app/dashboard"){
+   if(window.location.hash=="" && window.location.href=="localhost:8080/dashboard"){
         _('#projectView').style.display = "block";
 		_('#currentDate').innerText = currentDay();
 		_('#projectHeadings').innerText = 'My Task';
