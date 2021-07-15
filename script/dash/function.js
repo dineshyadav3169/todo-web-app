@@ -291,5 +291,43 @@ function loadTaskFromFire() {
 			pendingBox.append(taskBox);
 		}
 	}
+	sortableCall()
 }
 	
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////
+// 	Sortable calling on user interaction and then destroying
+///////////////////////////////////////////////////////////////
+function sortableCall(){
+    console.log("stort called")
+	sortable('.js-sortable', {
+        forcePlaceholderSize: true,
+        placeholderClass: 'mb1 bg-navy border border-yellow',
+        hoverClass: 'bg-maroon yellow',
+        itemSerializer: function (item, container) {
+          item.parent = '[parentNode]'
+          item.node = '[Node]'
+          item.html = item.html.replace('<','&lt;')
+          return item
+        },
+        containerSerializer: function (container) {
+          container.node = '[Node]'
+          return container
+        }
+      })
+    sortable('.js-sortable-copy-target', {
+		forcePlaceholderSize: true,
+			acceptFrom: '.js-sortable,.js-sortable-copy-target',
+		placeholderClass: 'mb1 border border-maroon',
+	  });
+}
